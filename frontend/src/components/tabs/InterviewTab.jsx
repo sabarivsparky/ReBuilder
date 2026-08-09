@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { MessageSquare, Send, Brain, CheckCircle } from 'lucide-react';
 import { generateMockInterview } from '../../engine/resumeGenerator';
 
 const InterviewTab = ({ resumeData }) => {
-  const [questions, setQuestions] = useState([]);
+  const questions = useMemo(() => {
+    return resumeData ? generateMockInterview(resumeData) : [];
+  }, [resumeData]);
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState(null);
   const [isGeneratingFeedback, setIsGeneratingFeedback] = useState(false);
-
-  useEffect(() => {
-    if (resumeData) {
-      setQuestions(generateMockInterview(resumeData));
-    }
-  }, [resumeData]);
 
   const handleAnswerChange = (questionIndex, answer) => {
     setAnswers(prev => ({

@@ -1,14 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { Globe, Download, ExternalLink } from 'lucide-react';
 import { generatePortfolioHTML } from '../../engine/resumeGenerator';
 
 const PortfolioTab = ({ resumeData }) => {
-  const [portfolioHtml, setPortfolioHtml] = useState('');
-
-  useEffect(() => {
-    if (resumeData) {
-      setPortfolioHtml(generatePortfolioHTML(resumeData));
-    }
+  const portfolioHtml = useMemo(() => {
+    return resumeData ? generatePortfolioHTML(resumeData) : '';
   }, [resumeData]);
 
   const handleDownloadHTML = () => {
